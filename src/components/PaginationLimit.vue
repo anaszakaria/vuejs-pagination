@@ -2,7 +2,7 @@
     <nav>
         <ul class="pagination">
             <li :class="{ disabled: !prev }" v-on:click="go(prev)"><span>&lsaquo;</span></li>
-            <li v-for="link in links" :class="{ active: current == link, disabled: isNaN(link) }" v-on:click="go(link)"><span>{{ link }}</span></li>
+            <li v-for="link in links" :class="{ active: currentPg == link, disabled: isNaN(link) }" v-on:click="go(link)"><span>{{ link }}</span></li>
             <li :class="{ disabled: !next }" v-on:click="go(next)"><span>&rsaquo;</span></li>
         </ul>
     </nav>
@@ -12,19 +12,19 @@
 export default {
     name: 'PaginationLimit',
     props: {
-        total: {
+        totalPg: {
             type: Number,
             default: 0
         },
-        current: {
+        currentPg: {
             type: Number,
             default: 1
         },
-        limit: {
+        pgLimit: {
             type: Number,
             default: 4,
-            coerce(limit) {
-                return limit - 1
+            coerce(pgLimit) {
+                return pgLimit - 1
             }
         }
     },
@@ -36,33 +36,33 @@ export default {
     computed: {
         pages() {
             let pages = []
-            for (let i = 1; i <= this.total; i++) {
+            for (let i = 1; i <= this.totalPg; i++) {
                 pages.push(i)
             }
             return pages
         },
         links() {
             let first = [1, '...'],
-            last = ['...', this.total],
+            last = ['...', this.totalPg],
             range = []
 
-            if (this.current <= this.limit) {
-                range = this.range(1, this.limit + 1)
-                return (this.current + range.length) <= this.total ? range.concat(last) : range
-            } else if (this.current > (this.total - this.limit)) {
-                range = this.range(this.total - (this.limit), this.total)
-                return (this.current - range.length) >= 1 ? first.concat(range) : range
+            if (this.currentPg <= this.pgLimit) {
+                range = this.range(1, this.pgLimit + 1)
+                return (this.currentPg + range.length) <= this.totalPg ? range.concat(last) : range
+            } else if (this.currentPg > (this.totalPg - this.pgLimit)) {
+                range = this.range(this.totalPg - (this.pgLimit), this.totalPg)
+                return (this.currentPg - range.length) >= 1 ? first.concat(range) : range
             } else {
-                range = this.range(this.current - Math.ceil(this.limit / 2), this.current + Math.ceil(this.limit / 2))
+                range = this.range(this.currentPg - Math.ceil(this.pgLimit / 2), this.currentPg + Math.ceil(this.pgLimit / 2))
                 return first.concat(range).concat(last)
             }
         },
         next() {
-            let next = this.current + 1
-            return next <= this.total ? next : false
+            let next = this.currentPg + 1
+            return next <= this.totalPg ? next : false
         },
         prev() {
-            return this.current - 1
+            return this.currentPg - 1
         },
         show() {
             return this.next || this.prev

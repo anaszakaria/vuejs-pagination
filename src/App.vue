@@ -5,6 +5,10 @@
 </template>
 
 <style lang="scss">
+* {
+    box-sizing: border-box;
+}
+
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -13,10 +17,19 @@
     color: #2c3e50;
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
-    max-width: 800px;
+    margin: 0 auto;
     th, td {
         text-align: left;
         padding: 8px;
@@ -36,8 +49,8 @@ table {
 .pagination {
     display: inline-block;
     list-style: none;
-    margin: 0 0 1.5rem;
     padding: 0;
+    overflow: auto;
     li {
         display: inline;
         > span {
