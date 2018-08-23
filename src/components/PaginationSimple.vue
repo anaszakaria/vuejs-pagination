@@ -1,21 +1,13 @@
 <template>
-    <ul class="pagination">
-        <li class="pagination-item">
-            <button type="button" @click="onClickFirstPage" :disabled="isInFirstPage" aria-label="Go to first page">First</button>
-        </li>
-        <li class="pagination-item">
-            <button type="button" @click="onClickPreviousPage" :disabled="isInFirstPage" aria-label="Go to previous page">Previous</button>
-        </li>
-        <li v-for="page in pages" class="pagination-item">
-            <button type="button" @click="onClickPage(page.name)" :disabled="page.isDisabled" :class="{ active: isPageActive(page.name) }" :aria-label="`Go to page number ${page.name}`">{{ page.name }}</button>
-        </li>
-        <li class="pagination-item">
-            <button type="button" @click="onClickNextPage" :disabled="isInLastPage" aria-label="Go to next page">Next</button>
-        </li>
-        <li class="pagination-item">
-            <button type="button" @click="onClickLastPage" :disabled="isInLastPage" aria-label="Go to last page">Last</button>
-        </li>
-    </ul>
+    <nav>
+        <ul class="pagination">
+            <li :class="{ disabled: isInFirstPage }" v-on:click="onClickFirstPage" :disabled="isInFirstPage"><span>&laquo;</span></li>
+            <li :class="{ disabled: isInFirstPage }" v-on:click="onClickPreviousPage" :disabled="isInFirstPage"><span>&lsaquo;</span></li>
+            <li v-for="page in pages" :class="{ active: isPageActive(page.name) }" v-on:click="onClickPage(page.name)"><span>{{ page.name }}</span></li>
+            <li :class="{ disabled: isInLastPage }" v-on:click="onClickNextPage" :disabled="isInLastPage"><span>&rsaquo;</span></li>
+            <li :class="{ disabled: isInLastPage }" v-on:click="onClickLastPage" :disabled="isInLastPage"><span>&raquo;</span></li>
+        </ul>
+    </nav>
 </template>
 
 <script>
@@ -31,11 +23,7 @@ export default {
             type: Number,
             required: true
         },
-        totalItems: {
-            type: Number,
-            required: true
-        },
-        perPage: {
+        pgSize: {
             type: Number,
             required: true
         },
@@ -79,12 +67,18 @@ export default {
             this.$emit('pagechanged', 1)
         },
         onClickPreviousPage() {
+            if (this.currentPage === 1) {
+                return
+            }
             this.$emit('pagechanged', this.currentPage - 1)
         },
         onClickPage(page) {
             this.$emit('pagechanged', page)
         },
         onClickNextPage() {
+            if (this.currentPage === this.totalPages) {
+                return
+            }
             this.$emit('pagechanged', this.currentPage + 1)
         },
         onClickLastPage() {
@@ -98,16 +92,5 @@ export default {
 </script>
 
 <style lang="css">
-.pagination {
-    list-style-type: none;
-}
 
-.pagination-item {
-    display: inline-block;
-}
-
-.active {
-    background-color: #4AAE9B;
-    color: #ffffff;
-}
 </style>
