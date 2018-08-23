@@ -1,8 +1,9 @@
 <template>
     <div class="">
-        <pagination :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></pagination>
+        <h2>Pagination Limit</h2>
+        <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
 
-        <section id="table-data">
+        <section class="table-data">
             <table>
                 <thead>
                     <tr>
@@ -23,7 +24,7 @@
             </table>
         </section>
 
-        <section id="grid-data">
+        <section class="grid-data">
             <div class="item-info" v-for="item in sortedArray">
                 <ul>
                     <li>Name: {{ item.name }}</li>
@@ -34,7 +35,7 @@
             </div>
         </section>
 
-        <pagination :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></pagination>
+        <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
     </div>
 </template>
 
@@ -44,7 +45,7 @@ import PaginationLimit from '@/components/PaginationLimit'
 export default {
     name: 'Page1',
     components: {
-        'pagination': PaginationLimit
+        'paginationlimit': PaginationLimit
     },
     data() {
         return {
@@ -120,7 +121,7 @@ export default {
                     age: 35,
                     job: 'Programmer',
                     gender: 'F'
-                },
+                }
             ],
             currentPgSort: 'name',
             currentPgSortDir: 'asc',
@@ -138,7 +139,7 @@ export default {
                 this.currentPgSortDir = this.currentPgSortDir==='asc'?'desc':'asc'
             }
             this.currentPgSort = s
-        },
+        }
     },
     computed: {
         sortedArray() {
@@ -161,12 +162,12 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#table-data {
+<style lang="scss" scoped>
+.table-data {
     margin: 12px;
 }
 
-#grid-data {
+.grid-data {
     margin: 12px 0;
     overflow: auto;
 }

@@ -1,8 +1,8 @@
 <template>
     <div id="home">
         <ul>
-            <li>Page 1</li>
-            <li>Page 2</li>
+            <li>Page 1: Pagination Limit</li>
+            <li>Page 2: Pagination Simple</li>
         </ul>
     </div>
 </template>
