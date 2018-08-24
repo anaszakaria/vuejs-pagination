@@ -1,7 +1,24 @@
 <template>
-    <div class="">
-        <h2>Pagination Simple</h2>
-        <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
+    <div>
+        <h3>Pagination with vuejs-paginate</h3>
+
+        <paginate
+        v-model="page"
+        :page-count="totalPg"
+        :margin-pages="1"
+        :page-range="pgSize"
+        :container-class="'pagination'"
+        :page-class="'page-item'"
+        :page-link-class="'page-link-item'"
+        :prev-class="'prev-item'"
+        :prev-link-class="'prev-link-item'"
+        :next-class="'next-item'"
+        :next-link-class="'next-link-item'"
+        :break-view-class="'break-view'"
+        :break-view-link-class="'break-view-link'"
+        :first-last-button="true"
+        :click-handler="onPageChange"
+        ></paginate>
 
         <section class="table-data">
             <table>
@@ -34,33 +51,27 @@
                 </ul>
             </div>
         </section>
-
-        <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
     </div>
-
 </template>
 
 <script>
 import axios from 'axios'
-import PaginationSimple from '../components/PaginationSimple.vue'
 
 export default {
-    name: 'Page2',
-    components: {
-        'paginationsimple': PaginationSimple
-    },
+    name: 'VueJSPaginate',
     data() {
         return {
             users: [],
+            page: 1,
             currentPgSort: 'name',
             currentPgSortDir: 'asc',
-            currentPage: 1,
-            perPage: 5
+            //pgLimit: 4,
+            pgSize: 5
         }
     },
     methods: {
-        onPageChange(page) {
-            this.currentPage = page;
+        onPageChange(pageNum) {
+            console.log(pageNum)
         },
         sort(s) {
             if(s === this.currentPgSort) {
@@ -70,12 +81,6 @@ export default {
         }
     },
     computed: {
-        totalPages() {
-            return Math.ceil(this.users.length / this.perPage)
-        },
-        totalItems() {
-            return this.users.length
-        },
         sortedArray() {
             return this.users.sort((a,b) => {
                 let modifier = 1
@@ -84,13 +89,13 @@ export default {
                 if(a[this.currentPgSort] > b[this.currentPgSort]) return 1 * modifier
                 return 0
             }).filter((row, index) => {
-                let start = (this.currentPage-1)*this.perPage
-                let end = this.currentPage*this.perPage
+                let start = (this.page-1)*this.pgSize
+                let end = this.page*this.pgSize
                 if(index >= start && index < end) return true
             })
         },
         totalPg() {
-            return Math.ceil(this.users.length / this.perPage)
+            return Math.ceil(this.users.length / this.pgSize)
         }
     },
     created() {
@@ -105,6 +110,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 </style>

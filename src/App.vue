@@ -113,4 +113,27 @@ table {
         pointer-events: none;
     }
 }
+
+.table-data {
+    margin: 12px;
+}
+
+.grid-data {
+    margin: 12px 0;
+    overflow: auto;
+}
+
+.item-info {
+    float: left;
+    width: 20%;
+    padding: 8px;
+    ul {
+        background: #333;
+        color: #FFF;
+    }
+    li {
+        text-align: left;
+        padding: 12px;
+    }
+}
 </style>
