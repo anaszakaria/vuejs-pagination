@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <h2>Pagination Simple</h2>
+        <h3>Pagination simple, no first and last page</h3>
         <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
 
         <section class="table-data">
@@ -45,7 +45,7 @@ import axios from 'axios'
 import PaginationSimple from '../components/PaginationSimple.vue'
 
 export default {
-    name: 'Page2',
+    name: 'SimplePagination',
     components: {
         'paginationsimple': PaginationSimple
     },
@@ -104,7 +104,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

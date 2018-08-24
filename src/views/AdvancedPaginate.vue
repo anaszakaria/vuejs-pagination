@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <h2>Pagination Limit</h2>
+        <h3>Pagination with page limit, first and last page</h3>
         <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
 
         <section class="table-data">
@@ -44,7 +44,7 @@ import axios from 'axios'
 import PaginationLimit from '@/components/PaginationLimit'
 
 export default {
-    name: 'Page1',
+    name: 'AdvancedPagination',
     components: {
         'paginationlimit': PaginationLimit
     },
@@ -98,28 +98,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.table-data {
-    margin: 12px;
-}
-
-.grid-data {
-    margin: 12px 0;
-    overflow: auto;
-}
-
-.item-info {
-    float: left;
-    width: 20%;
-    padding: 8px;
-    ul {
-        background: #333;
-        color: #FFF;
-    }
-    li {
-        text-align: left;
-        padding: 12px;
-    }
-}
-</style>

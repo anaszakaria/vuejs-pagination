@@ -1,7 +1,6 @@
 <template>
     <div>
         <h3>Pagination with vuejs-paginate</h3>
-
         <paginate
         v-model="page"
         :page-count="totalPg"
@@ -63,10 +62,9 @@ export default {
         return {
             users: [],
             page: 1,
+            pgSize: 5,
             currentPgSort: 'name',
             currentPgSortDir: 'asc',
-            //pgLimit: 4,
-            pgSize: 5
         }
     },
     methods: {
@@ -109,7 +107,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-
-</style>
