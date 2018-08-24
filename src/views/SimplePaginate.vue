@@ -1,7 +1,7 @@
 <template>
     <div class="">
-        <h2>Pagination Limit</h2>
-        <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
+        <h3>Pagination simple, no first and last page</h3>
+        <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
 
         <section class="table-data">
             <table>
@@ -35,32 +35,32 @@
             </div>
         </section>
 
-        <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
+        <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
     </div>
+
 </template>
 
 <script>
 import axios from 'axios'
-import PaginationLimit from '@/components/PaginationLimit'
+import PaginationSimple from '../components/PaginationSimple.vue'
 
 export default {
-    name: 'Page1',
+    name: 'Page2',
     components: {
-        'paginationlimit': PaginationLimit
+        'paginationsimple': PaginationSimple
     },
     data() {
         return {
             users: [],
             currentPgSort: 'name',
             currentPgSortDir: 'asc',
-            currentPg: 1,
-            pgLimit: 4,
-            pgSize: 5
+            currentPage: 1,
+            perPage: 5
         }
     },
     methods: {
-        setcurrentPg(page) {
-            this.currentPg = page
+        onPageChange(page) {
+            this.currentPage = page;
         },
         sort(s) {
             if(s === this.currentPgSort) {
@@ -70,6 +70,12 @@ export default {
         }
     },
     computed: {
+        totalPages() {
+            return Math.ceil(this.users.length / this.perPage)
+        },
+        totalItems() {
+            return this.users.length
+        },
         sortedArray() {
             return this.users.sort((a,b) => {
                 let modifier = 1
@@ -78,13 +84,13 @@ export default {
                 if(a[this.currentPgSort] > b[this.currentPgSort]) return 1 * modifier
                 return 0
             }).filter((row, index) => {
-                let start = (this.currentPg-1)*this.pgSize
-                let end = this.currentPg*this.pgSize
+                let start = (this.currentPage-1)*this.perPage
+                let end = this.currentPage*this.perPage
                 if(index >= start && index < end) return true
             })
         },
         totalPg() {
-            return Math.ceil(this.users.length / this.pgSize)
+            return Math.ceil(this.users.length / this.perPage)
         }
     },
     created() {
@@ -98,28 +104,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.table-data {
-    margin: 12px;
-}
-
-.grid-data {
-    margin: 12px 0;
-    overflow: auto;
-}
-
-.item-info {
-    float: left;
-    width: 20%;
-    padding: 8px;
-    ul {
-        background: #333;
-        color: #FFF;
-    }
-    li {
-        text-align: left;
-        padding: 12px;
-    }
-}
-</style>

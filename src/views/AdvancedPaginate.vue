@@ -1,7 +1,7 @@
 <template>
     <div class="">
-        <h2>Pagination Simple</h2>
-        <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
+        <h3>Pagination with page limit, first and last page</h3>
+        <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
 
         <section class="table-data">
             <table>
@@ -35,32 +35,32 @@
             </div>
         </section>
 
-        <paginationsimple :total-pages="totalPages" :per-page="perPage" :current-page="currentPage" @pagechanged="onPageChange"></paginationsimple>
+        <paginationlimit :totalPg="totalPg" :currentPg="currentPg" :pgLimit="pgLimit" v-on:paginate="setcurrentPg"></paginationlimit>
     </div>
-
 </template>
 
 <script>
 import axios from 'axios'
-import PaginationSimple from '../components/PaginationSimple.vue'
+import PaginationLimit from '@/components/PaginationLimit'
 
 export default {
-    name: 'Page2',
+    name: 'Page1',
     components: {
-        'paginationsimple': PaginationSimple
+        'paginationlimit': PaginationLimit
     },
     data() {
         return {
             users: [],
             currentPgSort: 'name',
             currentPgSortDir: 'asc',
-            currentPage: 1,
-            perPage: 5
+            currentPg: 1,
+            pgLimit: 4,
+            pgSize: 5
         }
     },
     methods: {
-        onPageChange(page) {
-            this.currentPage = page;
+        setcurrentPg(page) {
+            this.currentPg = page
         },
         sort(s) {
             if(s === this.currentPgSort) {
@@ -70,12 +70,6 @@ export default {
         }
     },
     computed: {
-        totalPages() {
-            return Math.ceil(this.users.length / this.perPage)
-        },
-        totalItems() {
-            return this.users.length
-        },
         sortedArray() {
             return this.users.sort((a,b) => {
                 let modifier = 1
@@ -84,13 +78,13 @@ export default {
                 if(a[this.currentPgSort] > b[this.currentPgSort]) return 1 * modifier
                 return 0
             }).filter((row, index) => {
-                let start = (this.currentPage-1)*this.perPage
-                let end = this.currentPage*this.perPage
+                let start = (this.currentPg-1)*this.pgSize
+                let end = this.currentPg*this.pgSize
                 if(index >= start && index < end) return true
             })
         },
         totalPg() {
-            return Math.ceil(this.users.length / this.perPage)
+            return Math.ceil(this.users.length / this.pgSize)
         }
     },
     created() {
@@ -104,7 +98,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

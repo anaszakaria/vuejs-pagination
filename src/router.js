@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Page1 from './views/Page1.vue'
-import Page2 from './views/Page2.vue'
+import SimplePaginate from './views/SimplePaginate.vue'
+import AdvancedPaginate from './views/AdvancedPaginate.vue'
 import VueJSPaginate from './views/VueJSPaginate.vue'
 
 Vue.use(Router)
@@ -17,14 +17,14 @@ export default new Router({
             component: Home
         },
         {
-            path: '/page1',
-            name: 'page1',
-            component: Page1
+            path: '/simplepaginate',
+            name: 'simplepaginate',
+            component: SimplePaginate
         },
         {
-            path: '/page2',
-            name: 'page2',
-            component: Page2
+            path: '/advancedpaginate',
+            name: 'advancedpaginate',
+            component: AdvancedPaginate
         },
         {
             path: '/vuejspaginate',
