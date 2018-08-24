@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import PaginationLimit from '@/components/PaginationLimit'
 
 export default {
@@ -49,80 +50,7 @@ export default {
     },
     data() {
         return {
-            persons: [
-                {
-                    name: 'Anas',
-                    age: 38,
-                    job: 'Programmer',
-                    gender: 'M'
-                },
-                {
-                    name: 'Abu',
-                    age: 33,
-                    job: 'Lecturer',
-                    gender: 'M'
-                },
-                {
-                    name: 'Fatimah',
-                    age: 31,
-                    job: 'Lecturer',
-                    gender: 'F'
-                },
-                {
-                    name: 'Zainab',
-                    age: 25,
-                    job: 'Programmer',
-                    gender: 'F'
-                },
-                {
-                    name: 'Hamzah',
-                    age: 42,
-                    job: 'Doctor',
-                    gender: 'M'
-                },
-                {
-                    name: 'Halimah',
-                    age: 34,
-                    job: 'Doctor',
-                    gender: 'F'
-                },
-                {
-                    name: 'Zaki',
-                    age: 45,
-                    job: 'Engineer',
-                    gender: 'M'
-                },
-                {
-                    name: 'Zul',
-                    age: 29,
-                    job: 'Engineer',
-                    gender: 'M'
-                },
-                {
-                    name: 'Farah',
-                    age: 44,
-                    job: 'Engineer',
-                    gender: 'F'
-                },
-                {
-                    name: 'Johan',
-                    age: 38,
-                    job: 'Programmer',
-                    gender: 'M'
-                },
-                {
-                    name: 'Faizul',
-                    age: 39,
-                    job: 'Lecturer',
-                    gender: 'M'
-                },
-                {
-                    name: 'Rohani',
-                    age: 35,
-                    job: 'Programmer',
-                    gender: 'F'
-                }
-            ],
+            users: [],
             currentPgSort: 'name',
             currentPgSortDir: 'asc',
             currentPg: 1,
@@ -143,7 +71,7 @@ export default {
     },
     computed: {
         sortedArray() {
-            return this.persons.sort((a,b) => {
+            return this.users.sort((a,b) => {
                 let modifier = 1
                 if(this.currentPgSortDir === 'desc') modifier = -1
                 if(a[this.currentPgSort] < b[this.currentPgSort]) return -1 * modifier
@@ -156,8 +84,17 @@ export default {
             })
         },
         totalPg() {
-            return Math.ceil(this.persons.length / this.pgSize)
+            return Math.ceil(this.users.length / this.pgSize)
         }
+    },
+    created() {
+        axios.get('http://localhost:8080/data/users.json')
+        .then(response => {
+            this.users = response.data
+        })
+        .catch(e => {
+            console.log('error')
+        })
     }
 }
 </script>
