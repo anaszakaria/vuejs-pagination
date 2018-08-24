@@ -85,4 +85,32 @@ table {
         }
     }
 }
+
+.page-item, .prev-item, .next-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+    float: left;
+    margin-right: 0.25rem;
+    a {
+        display: block;
+        padding: 5px 10px;
+    }
+    &:active,
+    &:hover  {
+        border-color: darken(#ddd, 10%);
+    }
+    &.active {
+        background-color: #fc0;
+        border-color: darken(#fc0, 10%);
+        color: #fff;
+    }
+    &.disabled {
+        opacity: 0.75;
+        pointer-events: none;
+    }
+}
 </style>
